@@ -1,13 +1,57 @@
 package com.example.trial;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
+
+import com.example.trial.repositories.MyDataRepository;
 
 //@RestController
 @Controller
 public class HelloController {
 
+	@Autowired
+	MyDataRepository repository;
+
+	@RequestMapping(value="/", method = RequestMethod.GET)
+		public ModelAndView index(
+				@ModelAttribute("formModel") MyData mydata,
+				ModelAndView mav) {
+
+			mav.setViewName("index");
+			mav.addObject("msg", "we are cats");
+			Iterable<MyData> list = repository.findAll();
+			mav.addObject("datalist", list);
+			return mav;
+		}
+
+
+	@RequestMapping(value="/", method = RequestMethod.POST)
+	@Transactional(readOnly=false)
+		public ModelAndView form(
+				@ModelAttribute("formModel") MyData mydata,
+				ModelAndView mav) {
+
+		repository.saveAndFlush(mydata);
+		return new ModelAndView("redirect:/");
+	}
+}
+
+/*
+	@RequestMapping("/")
+	public ModelAndView index(ModelAndView mav) {
+
+		mav.setViewName("index");
+		mav.addObject("msg", "we are cats");
+		Iterable<MyData> list = repository.findAll();
+		mav.addObject("data", list);
+		return mav;
+	}
+*/
 //	String[] name = {"orion","artemis","uranos","herios","iris"};
 //	String[] mails = {"orion@star.gmobb.jp","artemis@star.gmobb.jp","uranos@star.gmobb.jp","herios@star.gmobb.jp","iris@star.gmobb.jp"};
 /*
@@ -33,12 +77,14 @@ public class HelloController {
 		return "index";
 	}
 */
+/*
 	@RequestMapping("/")
 	public ModelAndView index(ModelAndView mav) {
 		mav.setViewName("index");
 		return mav;
 	}
-}
+*/
+
 
 class DataObject{
 	private int id;

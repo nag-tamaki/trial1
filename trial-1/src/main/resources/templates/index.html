@@ -6,13 +6,49 @@
 <style>
 h1 { font-size:18pt; font-weight:bold; color:gray; }
 body { font-size:13pt; color:gray; margin:5px 25px; }
+pre { border: solid 3px red; padding: 10px;}
 </style>
 <style th:include="part :: frag_style"></style>
 </head>
 <body>
 	<h1 th:text="#{content.title}">Hello neko</h1>
+	<table>
+		<form method="POST" action="/" th:object="${formModel}">
+			<tr>
+				<td><label for="name">name</label></td>
+				<td><input type="text" name="name" th:value="*{name}" /></td>
+			</tr>
+			<tr>
+				<td><label for="age">age</label></td>
+				<td><input type="text" name="age" th:value="*{age}" /></td>
+			</tr>
+			<tr>
+				<td><label for="mail">mail</label></td>
+				<td><input type="text" name="mail" th:value="*{mail}" /></td>
+			</tr>
+			<tr>
+				<td><label for="memo">memo</label></td>
+				<td><input type="textarea" name="memo" th:value="memo" cols="20" rows="5" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" /></td>
+			</tr>
+		</form>
+	</table>
+
+	<hr />
+	<table>
+	<tr><th>id</th><th>name</th></tr>
+	<tr th:each="obj : ${datalist}">
+		<td th:text="${obj.id}"></td>
+		<td th:text="${obj.name}"></td>
+	</tr>
+	</table>
+<!--
 	<div th:include="part :: frag_body">
 		<p>this is original content</p>
 	</div>
+ -->
 </body>
 </html>
