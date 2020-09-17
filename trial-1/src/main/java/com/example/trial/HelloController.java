@@ -11,7 +11,7 @@ public class HelloController {
 
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public ModelAndView index(ModelAndView mav) {
-		mav.setViewName("index");
+		mav.setViewName("index1");
 		mav.addObject("msg", "please input and and send form");
 		return mav;
 	}

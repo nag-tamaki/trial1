@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<h1 th:text="#{content.title}">nekoneko</h1>
+<p><a th:href="@{'/home/{id}'(id=${param.id[0]})}">link</a></p>
+<!--
+<p th:text="#{content.message}"></p>
+<p th:text="${#dates.format(new java.util.Date(),'dd/MMM/yyyy HH:mm')}"></p>
+<p th:text="${#numbers.formatInteger(123,5)}"></p>
+<p th:text="${#strings.toUpperCase('thank you')}"></p>
+ -->
+ <!--
+ <p th:text="'from paramter... id=' + ${param.id[0] + ',name=' + param.name[0]}"></p>
+  -->
+
+</body>
+</html>
