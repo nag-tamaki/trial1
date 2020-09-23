@@ -1,5 +1,4 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
 <head>
 <title>top neko</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -11,13 +10,30 @@ pre { border: solid 3px red; padding: 10px;}
 <style th:include="part :: frag_style"></style>
 </head>
 <body>
+	<h1 th:text="#{content.title}">test Neko</h1>
+	<p th:text="${msg}"></p>
+	<table>
+		<tr><th>ID</th></tr>
+		<tr><th>name</th></tr>
+		<tr><th>mail</th></tr>
+		<tr><th>age</th></tr>
+		<tr><th>memo</th></tr>
+		<tr th:each="obj : ${datalist}">
+			<td th:text="${obj.id}" />
+			<td th:text="${obj.name}" />
+			<td th:text="${obj.mail}" />
+			<td th:text="${obj.age}" />
+			<td th:text="${obj.memo}" />
+		</tr>
+	</table>
+<!--
+<body>
 	<h1 th:text="#{content.title}">Hello neko</h1>
 	<table>
 		<form method="POST" action="/" th:object="${formModel}">
 			<tr>
 				<td><label for="name">name</label></td>
-				<td><input type="text" name="name" th:value="*{name}" /></td>
-			</tr>
+ 				<td><input type="text" name="name" th:value="*{name}" /></td>
 			<tr>
 				<td><label for="age">age</label></td>
 				<td><input type="text" name="age" th:value="*{age}" /></td>
@@ -44,7 +60,8 @@ pre { border: solid 3px red; padding: 10px;}
 		<td th:text="${obj.id}"></td>
 		<td th:text="${obj.name}"></td>
 	</tr>
-	</table>
+</table>
+ -->
 <!--
 	<div th:include="part :: frag_body">
 		<p>this is original content</p>

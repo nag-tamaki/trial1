@@ -1,9 +1,11 @@
 package com.example.trial;
 
+import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -17,29 +19,106 @@ public class HelloController {
 	@Autowired
 	MyDataRepository repository;
 
-	@RequestMapping(value="/", method = RequestMethod.GET)
-		public ModelAndView index(
-				@ModelAttribute("formModel") MyData mydata,
-				ModelAndView mav) {
+	@PersistenceContext
+	EntityManager entityManager;
 
-			mav.setViewName("index");
-			mav.addObject("msg", "we are cats");
-			Iterable<MyData> list = repository.findAll();
-			mav.addObject("datalist", list);
+	MyDataDaoImpl dao;
+
+	@PostConstruct
+	public void init() {
+		dao = new MyDataDaoImpl(entityManager);
+		MyData d1 =new MyData();
+		d1.setName("orion");
+		d1.setAge(14);
+		d1.setMail("orion@star.gmobb.jp");
+		d1.setMemo("オリオンです");
+//		repository.saveAndFlush(d1);
+	}
+
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public ModelAndView index(ModelAndView mav) {
+
+		mav.setViewName("index");
+		mav.addObject("msg", "My Data Sample");
+		Iterable<MyData> list = dao.getAll();
+		mav.addObject("datalist", list);
+		return mav;
+	}
+
+	/*
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public ModelAndView edit(
+			@ModelAttribute("formModel") MyData mydata,
+			ModelAndView mav) {
+
+		mav.setViewName("index");
+		mav.addObject("msg", "list cats data");
+		Iterable<MyData> list = repository.findAll();
+		mav.addObject("datalist", list);
+		return mav;
+	}
+
+
+@RequestMapping(value="/", method = RequestMethod.POST)
+@Transactional(readOnly=false)
+	public ModelAndView form(
+			@ModelAttribute("formModel") MyData mydata,
+			ModelAndView mav) {
+
+	repository.saveAndFlush(mydata);
+	return new ModelAndView("redirect:/");
+}
+}
+*/
+/*
+	@RequestMapping(value="/edit/{id}", method = RequestMethod.GET)
+		public ModelAndView edit(
+				@ModelAttribute MyData mydata,
+				@PathVariable int id, ModelAndView mav) {
+
+			mav.setViewName("edit");
+			mav.addObject("title", "edit cats data");
+			Optional<MyData> data = repository.findById((long) id);
+			mav.addObject("formModel", data.get());
 			return mav;
 		}
 
 
-	@RequestMapping(value="/", method = RequestMethod.POST)
+	@RequestMapping(value="/edit", method = RequestMethod.POST)
 	@Transactional(readOnly=false)
-		public ModelAndView form(
-				@ModelAttribute("formModel") MyData mydata,
+		public ModelAndView update(
+				@ModelAttribute MyData mydata,
 				ModelAndView mav) {
 
 		repository.saveAndFlush(mydata);
 		return new ModelAndView("redirect:/");
 	}
 }
+*/
+	/*
+	@RequestMapping(value="/delete/{id}", method = RequestMethod.GET)
+	public ModelAndView delete(
+			@PathVariable int id, ModelAndView mav) {
+
+		mav.setViewName("delete");
+		mav.addObject("title", "delete cats data");
+		Optional<MyData> data = repository.findById((long) id);
+		mav.addObject("formModel", data.get());
+		return mav;
+	}
+
+
+@RequestMapping(value="/delete", method = RequestMethod.POST)
+@Transactional(readOnly=false)
+	public ModelAndView remove(
+			@RequestParam long id,
+			ModelAndView mav) {
+
+	repository.deleteById(id);
+	return new ModelAndView("redirect:/");
+}
+}
+*/
 
 /*
 	@RequestMapping("/")
@@ -105,4 +184,5 @@ public String getName() {return name;}
 public void setName(String name) {this.name = name;}
 public String getValue() {return value;}
 public void setValue(String value) {this.value = value;}
+}
 }

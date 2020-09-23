@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>delete neko</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+h1 { font-size:18pt; font-weight:bold; color:gray; }
+body { font-size:13pt; color:gray; margin:5px 25px; }
+</style>
+</head>
+<body>
+	<h1 th:text="#{title}">delete nekoneko</h1>
+	<table>
+		<form method="POST" action="/delete" th:object="${formModel}">
+			<input type="hidden" name="id" th:value="*{id}" />
+			<tr>
+				<td><p th:text="|name: *{name}|" /></td>
+			</tr>
+			<tr>
+				<td><p th:text="|age: *{age}|" /></td>
+			</tr>
+			<tr>
+				<td><p th:text="|mail: *{mail}" /></td>
+			</tr>
+			<tr>
+				<td><p th:text="|memo: *{memo}" /></td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><input type="submit" value="delete" /></td>
+			</tr>
+		</form>
+	</table>
+
+</body>
+</html>
