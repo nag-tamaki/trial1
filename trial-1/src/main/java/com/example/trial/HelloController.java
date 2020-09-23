@@ -1,8 +1,11 @@
 package com.example.trial;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -45,6 +48,35 @@ public class HelloController {
 		return mav;
 	}
 
+	@RequestMapping(value="/find", method = RequestMethod.GET)
+	public ModelAndView find(ModelAndView mav) {
+		mav.setViewName("find");
+		mav.addObject("title", "FindPage");
+		mav.addObject("msg", "find cats sample");
+		mav.addObject("value", "");
+		Iterable<MyData> list = dao.getAll();
+		mav.addObject("datalist", list);
+		return mav;
+	}
+
+	@RequestMapping(value="/find", method = RequestMethod.POST)
+		public ModelAndView search(
+				HttpServletRequest req,
+				ModelAndView mav) {
+
+		mav.setViewName("find");
+		String param = req.getParameter("fstr");
+		if(param == "") {
+			mav = new ModelAndView("redirect:/find");
+		}else {
+			mav.addObject("title", "find result");
+			mav.addObject("msg", "[" + param + "] search result");
+			mav.addObject("value", param);
+			List<MyData> list = dao.find(param);
+			mav.addObject("datalist", list);
+		}
+		return mav;
+	}
 	/*
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView edit(
