@@ -37,19 +37,19 @@ public class HelloController {
 		d1.setMemo("オリオンです");
 //		repository.saveAndFlush(d1);
 	}
-/*
+
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView mav) {
 
 		mav.setViewName("index");
 		mav.addObject("msg", "My Data Sample");
-//		Iterable<MyData> list = dao.getAll();
-		Iterable<MyData> list = dao.findByAge(0,10);
+		Iterable<MyData> list = dao.getAll();
+//		Iterable<MyData> list = dao.findByAge(0,10);
 		mav.addObject("datalist", list);
 		return mav;
 	}
-*/
 
+/*
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView mav) {
 
@@ -61,7 +61,7 @@ public class HelloController {
 		mav.addObject("datalist", list);
 		return mav;
 	}
-
+*/
 	@RequestMapping(value="/find", method = RequestMethod.GET)
 	public ModelAndView find(ModelAndView mav) {
 		mav.setViewName("find");
