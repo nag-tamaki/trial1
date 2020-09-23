@@ -27,6 +27,9 @@ public class HelloController {
 
 	MyDataDaoImpl dao;
 
+	@Autowired
+	private MyDataService service;
+
 	@PostConstruct
 	public void init() {
 		dao = new MyDataDaoImpl(entityManager);
@@ -43,8 +46,9 @@ public class HelloController {
 
 		mav.setViewName("index");
 		mav.addObject("msg", "My Data Sample");
-		Iterable<MyData> list = dao.getAll();
+//		Iterable<MyData> list = dao.getAll();
 //		Iterable<MyData> list = dao.findByAge(0,10);
+		List<MyData> list = service.getAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}
@@ -68,7 +72,8 @@ public class HelloController {
 		mav.addObject("title", "FindPage");
 		mav.addObject("msg", "find cats sample");
 		mav.addObject("value", "");
-		Iterable<MyData> list = dao.getAll();
+//		Iterable<MyData> list = dao.getAll();
+		List<MyData> list = service.getAll();
 		mav.addObject("datalist", list);
 		return mav;
 	}
@@ -86,7 +91,8 @@ public class HelloController {
 			mav.addObject("title", "find result");
 			mav.addObject("msg", "[" + param + "] search result");
 			mav.addObject("value", param);
-			List<MyData> list = dao.find(param);
+//			List<MyData> list = dao.find(param);
+			List<MyData> list = service.find(param);
 			mav.addObject("datalist", list);
 		}
 		return mav;

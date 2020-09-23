@@ -50,13 +50,20 @@ public class MyDataDaoImpl implements MyDataDao<MyData> {
 
 	@Override
 	public List<MyData> getAll(){
+		int offset = 1;
+		int limit = 2;
+
 		List<MyData> list = null;
 
 		CriteriaBuilder builder = entityManager.getCriteriaBuilder();
 		CriteriaQuery<MyData> query = builder.createQuery(MyData.class);
 		Root<MyData> root = query.from(MyData.class);
-		query.select(root).orderBy(builder.desc(root.get("id")));
-		list = (List<MyData>)entityManager.createQuery(query).getResultList();
+		query.select(root);
+		list = (List<MyData>)entityManager
+				.createQuery(query)
+				.setFirstResult(offset)
+				.setMaxResults(limit)
+				.getResultList();
 
 		return list;
 	}
