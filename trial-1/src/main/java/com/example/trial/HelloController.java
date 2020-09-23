@@ -43,18 +43,21 @@ public class HelloController {
 
 		mav.setViewName("index");
 		mav.addObject("msg", "My Data Sample");
-		Iterable<MyData> list = dao.getAll();
+//		Iterable<MyData> list = dao.getAll();
+		Iterable<MyData> list = dao.findByAge(0,10);
 		mav.addObject("datalist", list);
 		return mav;
 	}
 */
+
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView mav) {
 
 		mav.setViewName("index");
 		mav.addObject("title", "FindPage");
 		mav.addObject("msg", "Find Page sample");
-		Iterable<MyData> list = repository.findAllOrderByName();
+//		Iterable<MyData> list = repository.findAllOrderByName();
+		Iterable<MyData> list = repository.findByAge(8, 15);
 		mav.addObject("datalist", list);
 		return mav;
 	}
