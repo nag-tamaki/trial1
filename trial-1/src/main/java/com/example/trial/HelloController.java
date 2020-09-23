@@ -37,13 +37,24 @@ public class HelloController {
 		d1.setMemo("オリオンです");
 //		repository.saveAndFlush(d1);
 	}
-
+/*
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public ModelAndView index(ModelAndView mav) {
 
 		mav.setViewName("index");
 		mav.addObject("msg", "My Data Sample");
 		Iterable<MyData> list = dao.getAll();
+		mav.addObject("datalist", list);
+		return mav;
+	}
+*/
+	@RequestMapping(value="/", method = RequestMethod.GET)
+	public ModelAndView index(ModelAndView mav) {
+
+		mav.setViewName("index");
+		mav.addObject("title", "FindPage");
+		mav.addObject("msg", "Find Page sample");
+		Iterable<MyData> list = repository.findAllOrderByName();
 		mav.addObject("datalist", list);
 		return mav;
 	}
